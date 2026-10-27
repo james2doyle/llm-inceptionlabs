@@ -1,0 +1,23 @@
+[project]
+name = "llm-inceptionlabs"
+version = "0.1"
+description = "Access Inception Labs Mercury models via API"
+readme = "README.md"
+authors = [{name = "James Doyle"}]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License"
+]
+requires-python = ">=3.10"
+dependencies = [
+    "llm>=0.10"
+]
+[project.urls]
+Homepage = "https://github.com/james2doyle/llm-inceptionlabs"
+Changelog = "https://github.com/james2doyle/llm-inceptionlabs/releases"
+Issues = "https://github.com/james2doyle/llm-inceptionlabs/issues"
+CI = "https://github.com/james2doyle/llm-inceptionlabs/actions"
+[project.entry-points.llm]
+inceptionlabs = "llm_inceptionlabs"
+[project.optional-dependencies]
+test = ["pytest"]
