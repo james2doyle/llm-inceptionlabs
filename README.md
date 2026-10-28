@@ -33,19 +33,22 @@ Or export it as an environment variable:
 export INCEPTION_API_KEY=...
 ```
 
-Run `llm models` to get a list of models. Three models are included:
-`mercury-3`, `mercury-2.5` and `mercury-2`.
+Run `llm models` to get a list of models. Model IDs are namespaced with an
+`inceptionlabs/` prefix to avoid conflicts with models from other plugins,
+e.g. `inceptionlabs/mercury-3`. Three models are included:
+`inceptionlabs/mercury-3`, `inceptionlabs/mercury-2.5` and
+`inceptionlabs/mercury-2`.
 
 Run prompts like this:
 
 ```bash
-llm -m mercury-3 'What is a diffusion model?'
+llm -m inceptionlabs/mercury-3 'What is a diffusion model?'
 ```
 
 Reasoning effort accepts `instant`, `low`, `medium` or `high`:
 
 ```bash
-llm -m mercury-3 'What is a diffusion model?' -o reasoning_effort instant
+llm -m inceptionlabs/mercury-3 'What is a diffusion model?' -o reasoning_effort instant
 ```
 
 Mercury models are diffusion LLMs — set `diffusing` to stream the intermediate
@@ -53,7 +56,7 @@ denoising steps instead of just the final output. Note that in this mode each
 chunk contains the full text as it is refined, not a delta:
 
 ```bash
-llm -m mercury-3 'What is a diffusion model?' -o diffusing true
+llm -m inceptionlabs/mercury-3 'What is a diffusion model?' -o diffusing true
 ```
 
 Note: `mercury-3` accepts temperatures between 0.5 and 1.0.

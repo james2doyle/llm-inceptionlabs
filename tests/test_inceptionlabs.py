@@ -33,15 +33,17 @@ def test_models_register_with_key(monkeypatch, registered):
     from llm_inceptionlabs import InceptionChat, MODELS, register_models
 
     register_models(registered)
-    assert [(m.model_id, am.model_id) for m, am, _ in registered.pairs] == [
-        ("mercury-3", "mercury-3"),
-        ("mercury-2.5", "mercury-2.5"),
-        ("mercury-2", "mercury-2"),
+    assert [(m.model_id, m.model_name) for m, _, _ in registered.pairs] == [
+        (f"inceptionlabs/{model_id}", model_id) for model_id in MODELS
     ]
     for model, async_model, _ in registered.pairs:
         assert isinstance(model, InceptionChat)
+        # Namespaced IDs, raw API IDs in model_name
+        assert model.model_id.startswith("inceptionlabs/")
+        assert model.model_name == model.model_id.removeprefix("inceptionlabs/")
         # Each sync model registered in an (sync, async) pair
-        assert async_model is not None and async_model.model_id == model.model_id
+        assert async_model.model_id == model.model_id
+        assert async_model.model_name == model.model_name
 
 
 def test_no_registration_without_key(monkeypatch, registered):
@@ -66,4 +68,4 @@ def test_options_accept_mercury_values():
 def test_model_str():
     from llm_inceptionlabs import InceptionChat
 
-    assert str(InceptionChat("mercury-3")) == "Inception: mercury-3"
+    assert str(InceptionChat("mercury-3")) == "Inception: inceptionlabs/mercury-3"

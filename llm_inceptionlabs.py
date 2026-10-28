@@ -41,8 +41,12 @@ class InceptionOptions(SharedOptions):
 
 class _InceptionShared:
     def __init__(self, model_id):
+        # Prefix the LLM-facing model_id with our namespace so these
+        # models cannot collide with other plugins (e.g. OpenRouter
+        # serves the same upstream models). The raw provider ID is kept
+        # in model_name, which is what gets sent to the API.
         super().__init__(
-            model_id=model_id,
+            model_id=f"inceptionlabs/{model_id}",
             model_name=model_id,
             api_base=API_BASE,
             supports_schema=True,
